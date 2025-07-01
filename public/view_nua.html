@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NuA - Asistente Nutricional</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Incluye aquí tus estilos comunes -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Estilos específicos de NuA */
+        :root {
+            --primary-orange: #ff6b35;
+            --primary-green: #2d5a27;
+            --light-green: #4a7c59;
+            --bg-light: #f8f9fa;
+            --text-dark: #333;
+            --text-light: #6c757d;
+            --chat-bg: #f5f7fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--bg-light);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Contenedor principal de NuA */
+        .nua-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin-top: 80px; /* Ajuste para el nav */
+            height: calc(100vh - 80px);
+        }
+
+        /* Header integrado */
+        .nua-header {
+            padding: 20px;
+            background: white;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nua-logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-orange), #ffaa00);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .nua-title {
+            font-size: 1.5rem;
+            color: var(--primary-green);
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .nua-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            background: #4caf50;
+            border-radius: 50%;
+        }
+
+        /* Cuerpo del chat */
+        .nua-chat {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+            background: white;
+        }
+
+        /* Sidebar */
+        .nua-sidebar {
+            width: 280px;
+            background: var(--chat-bg);
+            border-right: 1px solid #e9ecef;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
+        }
+
+        .sidebar-section {
+            padding: 0 20px 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .sidebar-title {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .quick-action {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .quick-action:hover {
+            background: rgba(45, 90, 39, 0.1);
+            color: var(--primary-green);
+        }
+
+        .quick-action i {
+            width: 20px;
+            text-align: center;
+            color: var(--primary-orange);
+        }
+
+        .history-item {
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .history-item:hover {
+            background: rgba(45, 90, 39, 0.1);
+        }
+
+        .history-item i {
+            color: var(--text-light);
+        }
+
+        /* Área de conversación */
+        .conversation-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .messages-container {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: white;
+        }
+
+        .message {
+            max-width: 70%;
+            margin-bottom: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .message.bot {
+            margin-right: auto;
+        }
+
+        .message.user {
+            margin-left: auto;
+        }
+
+        .message-content {
+            padding: 15px;
+            border-radius: 15px;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .message.bot .message-content {
+            background: var(--chat-bg);
+            border-top-left-radius: 0;
+        }
+
+        .message.user .message-content {
+            background: var(--primary-orange);
+            color: white;
+            border-top-right-radius: 0;
+        }
+
+        .message-time {
+            font-size: 0.7rem;
+            color: var(--text-light);
+            margin-top: 5px;
+            text-align: right;
+        }
+
+        /* Input area */
+        .input-area {
+            padding: 15px 20px;
+            border-top: 1px solid #e9ecef;
+            background: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 1px solid #e9ecef;
+            border-radius: 25px;
+            outline: none;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .message-input:focus {
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+
+        .send-button {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: none;
+            background: var(--primary-orange);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .send-button:hover {
+            background: #e55a2b;
+            transform: scale(1.05);
+        }
+
+        /* Animaciones */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nua-chat {
+                flex-direction: column;
+            }
+            
+            .nua-sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #e9ecef;
+                padding: 15px 0;
+                overflow-x: auto;
+                flex-direction: row;
+                flex-wrap: nowrap;
+            }
+            
+            .sidebar-section {
+                flex: 0 0 auto;
+                width: 200px;
+                border-bottom: none;
+                border-right: 1px solid #e9ecef;
+                margin-bottom: 0;
+                padding: 0 15px;
+            }
+            
+            .quick-action, .history-item {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            
+            .message {
+                max-width: 85%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nua-header {
+                padding: 15px;
+            }
+            
+            .nua-title {
+                font-size: 1.2rem;
+            }
+            
+            .input-area {
+                padding: 10px 15px;
+            }
+            
+            .message-input {
+                padding: 10px 15px;
+            }
+            
+            .send-button {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Tu navegación existente se incluirá aquí -->
+    
+    <!-- Contenedor principal de NuA -->
+    <div class="nua-container">
+        <!-- Header integrado con el diseño -->
+        <div class="nua-header">
+            <div class="nua-logo">
+                <i class="fas fa-robot"></i>
+            </div>
+            <h1 class="nua-title">NuA - Asistente Nutricional</h1>
+            <div class="nua-status">
+                <div class="status-indicator"></div>
+                <span>En línea</span>
+            </div>
+        </div>
+        
+        <!-- Cuerpo del chat -->
+        <div class="nua-chat">
+            <!-- Sidebar con acciones rápidas -->
+            <div class="nua-sidebar">
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">Acciones Rápidas</h3>
+                    <a href="#" class="quick-action" data-prompt="Recomiéndame un desayuno saludable">
+                        <i class="fas fa-utensils"></i>
+                        Desayuno saludable
+                    </a>
+                    <a href="#" class="quick-action" data-prompt="¿Cómo aumentar mi ingesta de proteínas?">
+                        <i class="fas fa-dumbbell"></i>
+                        Más proteínas
+                    </a>
+                    <a href="#" class="quick-action" data-prompt="Alimentos para mejorar la digestión">
+                        <i class="fas fa-heartbeat"></i>
+                        Mejorar digestión
+                    </a>
+                    <a href="#" class="quick-action" data-prompt="Consejos para comer fuera de casa">
+                        <i class="fas fa-utensil-spoon"></i>
+                        Comer fuera
+                    </a>
+                    <a href="#" class="quick-action" data-prompt="Plan para bajar de peso">
+                        <i class="fas fa-weight"></i>
+                        Bajar de peso
+                    </a>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">Historial Reciente</h3>
+                    <div class="history-item">
+                        <i class="fas fa-history"></i>
+                        Plan de comidas semanal
+                    </div>
+                    <div class="history-item">
+                        <i class="fas fa-history"></i>
+                        Alergias alimenticias
+                    </div>
+                    <div class="history-item">
+                        <i class="fas fa-history"></i>
+                        Suplementos recomendados
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">Recursos</h3>
+                    <a href="#" class="quick-action">
+                        <i class="fas fa-book"></i>
+                        Guía nutricional
+                    </a>
+                    <a href="#" class="quick-action">
+                        <i class="fas fa-video"></i>
+                        Tutoriales
+                    </a>
+                    <a href="#" class="quick-action">
+                        <i class="fas fa-calendar-alt"></i>
+                        Planificador
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Área de conversación -->
+            <div class="conversation-area">
+                <div class="messages-container" id="nuaMessages">
+                    <!-- Mensaje de bienvenida -->
+                    <div class="message bot">
+                        <div class="message-content">
+                            <p>¡Hola! Soy NuA, tu Asistente Nutricional Inteligente. Estoy aquí para ayudarte con:</p>
+                            <ul>
+                                <li>Planes de alimentación personalizados</li>
+                                <li>Recomendaciones nutricionales</li>
+                                <li>Seguimiento de tus objetivos</li>
+                                <li>Respuestas a tus dudas sobre nutrición</li>
+                            </ul>
+                            <p>¿En qué puedo ayudarte hoy?</p>
+                        </div>
+                        <div class="message-time">Hoy, <span id="current-time"></span></div>
+                    </div>
+                </div>
+                
+                <!-- Área de entrada -->
+                <div class="input-area">
+                    <input type="text" class="message-input" placeholder="Escribe tu pregunta sobre nutrición..." id="nuaInput">
+                    <button class="send-button" id="sendNuaMessage">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funcionalidad de NuA
+        document.addEventListener('DOMContentLoaded', function() {
+            const nuaMessages = document.getElementById('nuaMessages');
+            const nuaInput = document.getElementById('nuaInput');
+            const sendBtn = document.getElementById('sendNuaMessage');
+            const quickActions = document.querySelectorAll('.quick-action');
+            
+            // Mostrar hora actual
+            document.getElementById('current-time').textContent = getCurrentTime();
+            
+            // Enviar mensaje al hacer clic
+            sendBtn.addEventListener('click', sendNuaMessage);
+            
+            // Enviar mensaje con Enter
+            nuaInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendNuaMessage();
+                }
+            });
+            
+            // Acciones rápidas
+            quickActions.forEach(action => {
+                action.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const prompt = this.getAttribute('data-prompt');
+                    if (prompt) {
+                        addMessage(prompt, 'user');
+                        simulateNuaResponse(prompt);
+                    }
+                });
+            });
+            
+            function sendNuaMessage() {
+                const message = nuaInput.value.trim();
+                if (message) {
+                    addMessage(message, 'user');
+                    nuaInput.value = '';
+                    simulateNuaResponse(message);
+                }
+            }
+            
+            function addMessage(text, sender) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}`;
+                messageDiv.innerHTML = `
+                    <div class="message-content">
+                        <p>${text}</p>
+                    </div>
+                    <div class="message-time">${getCurrentTime()}</div>
+                `;
+                nuaMessages.appendChild(messageDiv);
+                scrollToBottom();
+            }
+            
+            function simulateNuaResponse(userMessage) {
+                setTimeout(() => {
+                    const response = generateNuaResponse(userMessage);
+                    addMessage(response, 'bot');
+                }, 800);
+            }
+            
+            function generateNuaResponse(message) {
+                message = message.toLowerCase();
+                
+                // Respuestas específicas
+                if (message.includes('desayuno')) {
+                    return "Para un desayuno saludable te recomiendo:\n\n1. Bowl de avena con frutas frescas y nueces\n2. Tostadas integrales con aguacate y huevo pochado\n3. Smoothie de espinaca, plátano y mantequilla de maní\n\n¿Te gustaría una receta detallada de alguna de estas opciones?";
+                } else if (message.includes('proteína') || message.includes('proteinas')) {
+                    return "Para aumentar tu ingesta de proteínas considera estos alimentos:\n\n• Fuentes animales: Huevos, pollo, pescado, carne magra\n• Fuentes vegetales: Lentejas, quinoa, tofu, garbanzos\n• Lácteos: Yogur griego, requesón, queso cottage\n\n¿Quieres que genere un plan de comidas alto en proteínas?";
+                } else if (message.includes('digestión') || message.includes('digestivo')) {
+                    return "Para mejorar la digestión te sugiero:\n\n1. Alimentos ricos en fibra: Avena, manzanas, peras\n2. Probióticos: Yogur, kéfir, chucrut\n3. Jengibre y piña (contienen enzimas digestivas)\n4. Beber suficiente agua durante el día\n\n¿Tienes algún problema digestivo específico?";
+                } else if (message.includes('comer fuera') || message.includes('restaurante')) {
+                    return "Consejos para comer fuera saludablemente:\n\n• Elige opciones a la parrilla en vez de fritas\n• Pide aderezos y salsas aparte\n• Incluye vegetales en tu plato principal\n• Controla las porciones (puedes compartir o llevar parte)\n• Prefiere agua o té sin azúcar\n\n¿Vas a algún tipo de restaurante en particular?";
+                } else if (message.includes('peso') || message.includes('adelgazar')) {
+                    return "Recomendaciones para un plan saludable de pérdida de peso:\n\n1. Balance nutricional: Proteínas, fibra y grasas saludables\n2. Control de porciones\n3. Comidas regulares cada 3-4 horas\n4. Hidratación adecuada (2-3L de agua diarios)\n5. Ejercicio regular (150 min/semana)\n\n¿Quieres que genere un plan personalizado para ti?";
+                } else {
+                    // Respuestas generales
+                    const generalResponses = [
+                        `Sobre "${message}", puedo ofrecerte recomendaciones basadas en nutrición científica. ¿Te gustaría que profundice en algún aspecto específico?`,
+                        "Para darte la mejor respuesta, ¿podrías decirme si tienes alguna condición de salud o preferencia alimenticia que deba considerar?",
+                        "Esa es una excelente pregunta. Basado en las últimas investigaciones nutricionales, te puedo sugerir que...",
+                        "¿Has considerado consultar esta pregunta con un nutricionista certificado para una valoración personalizada?"
+                    ];
+                    return generalResponses[Math.floor(Math.random() * generalResponses.length)];
+                }
+            }
+            
+            function getCurrentTime() {
+                const now = new Date();
+                return `${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`;
+            }
+            
+            function scrollToBottom() {
+                nuaMessages.scrollTop = nuaMessages.scrollHeight;
+            }
+        });
+    </script>
+</body>
+</html>

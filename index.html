@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriApoyo - Apoyo en Nutrición Personalizada</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-orange: #ff6b35;
+            --primary-green: #2d5a27;
+            --light-green: #4a7c59;
+            --bg-light: #f8f9fa;
+            --text-dark: #333;
+            --text-light: #6c757d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Desktop Navigation */
+        .desktop-nav {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .desktop-nav.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-green);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-orange), #ffaa00);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-orange);
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary-orange);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-outline-custom {
+            border: 2px solid var(--primary-green);
+            color: var(--primary-green);
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-custom:hover {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        .btn-primary-custom {
+            background: var(--primary-orange);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            border: 2px solid var(--primary-orange);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-custom:hover {
+            background: transparent;
+            color: var(--primary-orange);
+        }
+
+        /* Modern Hero Section */
+        .modern-hero {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 120px 0 80px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 80px;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .hero-content {
+            flex: 1;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: var(--primary-green);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-title span {
+            color: var(--primary-orange);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-dark);
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            max-width: 500px;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 3rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-orange);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary-green);
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--primary-green);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 30px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            min-width: 120px;
+        }
+
+        .stat-icon {
+            font-size: 1.5rem;
+            color: var(--primary-orange);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            font-weight: 600;
+            text-align: center;
+        }
+
+       .hero-image {
+    position: relative;
+    flex: 1;
+  
+}
+
+.hero-image img {
+    width: 100%;
+    max-width: 400px;
+    margin-left: 100px;
+    display: block;
+    position: relative;
+
+}
+
+/* Degradado que coincide con el fondo del hero */
+.hero-image::after {
+    content: "";
+    position: absolute;
+    bottom: -1px; /* Cubre el borde sin dejar espacio */
+    left: 100px;
+    width: 100%;
+    max-width: 400px;
+    height: 30px; /* Ajusta según necesites */
+    background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        #e9ecef 70%  /* Color del gradiente del hero (ajusta al tono exacto) */
+    );
+    z-index: 2; /* Se coloca sobre la imagen y su sombra */
+    pointer-events: none;
+    border-bottom-left-radius: 20px; /* Si la imagen tiene bordes redondeados */
+    border-bottom-right-radius: 20px;
+}
+
+        .floating-card {
+            position: absolute;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 200px;
+            z-index: 3;
+        }
+
+        .floating-card i {
+            font-size: 1.2rem;
+            color: var(--primary-orange);
+        }
+
+        .floating-card p {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin: 0;
+        }
+
+        .card-1 {
+            top: -20px;
+            left: -20px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .card-2 {
+            bottom: -20px;
+            right: -20px;
+            animation: float 6s ease-in-out infinite 2s;
+        }
+
+        .card-3 {
+            top: 60px;
+            right: -20px;
+            animation: float 6s ease-in-out infinite 1s;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Mobile Navigation */
+        .mobile-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 15px 20px;
+            display: none;
+        }
+
+        .mobile-nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mobile-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--primary-green);
+            font-weight: 700;
+            font-size: 1.2rem;
+            gap: 10px;
+        }
+
+        .mobile-menu-toggle {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary-green);
+            cursor: pointer;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 85%;
+            max-width: 350px;
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            transition: right 0.3s ease;
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu-header {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            font-weight: 600;
+            color: var(--primary-green);
+        }
+
+        .mobile-menu-close {
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
+        .mobile-auth-buttons {
+            padding: 20px;
+            display: flex;
+            gap: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .btn-login {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            border: 1px solid var(--primary-green);
+            color: var(--primary-green);
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-login:hover {
+            background: rgba(45, 90, 39, 0.1);
+        }
+
+        .btn-register {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            background: var(--primary-orange);
+            color: white;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-register:hover {
+            background: #e55a2b;
+        }
+
+        .mobile-nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .mobile-nav-links li a {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: var(--text-dark);
+            text-decoration: none;
+            gap: 15px;
+            border-bottom: 1px solid #f5f5f5;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav-links li a:hover,
+        .mobile-nav-links li a.active {
+            color: var(--primary-orange);
+            background: rgba(255, 107, 53, 0.05);
+        }
+
+        .mobile-nav-links li a i {
+            width: 24px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .mobile-user-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 15px;
+        }
+
+        .mobile-user-footer a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-user-footer a:hover {
+            color: var(--primary-orange);
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .feature-card {
+            background: var(--bg-light);
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            border: 1px solid #eee;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-green);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-green);
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .feature-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary-orange);
+            text-decoration: none;
+            font-weight: 600;
+            gap: 5px;
+            transition: gap 0.3s ease;
+        }
+
+        .feature-link:hover {
+            gap: 10px;
+        }
+
+        /* Chatbot */
+        .chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1001;
+        }
+
+        .chatbot-toggle {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-orange);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+            transition: all 0.3s ease;
+            border: none;
+            z-index: 1002;
+        }
+
+        .chatbot-toggle.hidden {
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.5);
+        }
+
+        .chatbot-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        .chatbot-window {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            height: 450px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            transform-origin: bottom right;
+            z-index: 1003;
+        }
+
+        .chatbot-window.active {
+            display: flex;
+            animation: chatOpen 0.3s ease forwards;
+        }
+
+        @keyframes chatOpen {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .chatbot-header {
+            background: var(--primary-green);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chatbot-header h6 {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .chatbot-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .chatbot-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .chatbot-input {
+            padding: 1rem;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            padding: 0.5rem 1rem;
+            outline: none;
+            transition: border 0.3s ease;
+        }
+
+        .chatbot-input input:focus {
+            border-color: var(--primary-orange);
+        }
+
+        .chatbot-input button {
+            background: var(--primary-orange);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .chatbot-input button:hover {
+            background: #e55a2b;
+            transform: rotate(15deg);
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 15px;
+            max-width: 80%;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.bot {
+            background: white;
+            margin-right: auto;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .message.user {
+            background: var(--primary-orange);
+            color: white;
+            margin-left: auto;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-subtitle {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .hero-cta {
+                justify-content: center;
+            }
+            
+            .hero-stats {
+                justify-content: center;
+            }
+            
+            .hero-image {
+                margin-top: 40px;
+            }
+             .hero-image {
+                width: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .desktop-nav {
+                display: none;
+            }
+            
+            .mobile-navbar {
+                display: block;
+            }
+            
+            .modern-hero {
+                padding: 100px 0 60px;
+                margin-top: 70px;
+            }
+            
+            .hero-title {
+                font-size: 2.4rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .hero-cta {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .hero-stats {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            
+            .stat-item {
+                min-width: calc(50% - 15px);
+            }
+            
+            .floating-card {
+                max-width: 150px;
+                padding: 10px 15px;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .chatbot-window {
+                width: calc(100% - 40px);
+                height: 70vh;
+                bottom: 10px;
+                right: 10px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .stat-item {
+                min-width: 100%;
+            }
+            
+            .mobile-menu {
+                width: 100%;
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Desktop Navigation -->
+    <nav class="desktop-nav" id="desktopNav">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <img src="sources/WhatsApp Image 2025-06-30 at 11.58.27.jpeg" alt="" width="50">
+                </div>
+                NUTRIAPOYO
+            </a>
+            
+            <div class="nav-links">
+                <a href="#inicio">Inicio</a>
+                <a href="#evaluacion">Evaluación</a>
+                <a href="#profesionales">Profesionales</a>
+                <a href="#">IA Nutricional</a>
+                <a href="#blog">Blog</a>
+            </div>
+            
+            <div class="nav-buttons">
+                <a href="#" class="btn-outline-custom">Iniciar sesión</a>
+                <a href="#" class="btn-primary-custom">Registrarse</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-navbar">
+        <div class="mobile-nav-container">
+            <a href="#" class="mobile-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <span>NutriApoyo</span>
+            </a>
+            
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-header">
+                <span>Menú</span>
+                <button class="mobile-menu-close" id="mobileMenuClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="mobile-auth-buttons">
+                <a href="#" class="btn-login">Iniciar sesión</a>
+                <a href="#" class="btn-register">Registrarse</a>
+            </div>
+            
+            <ul class="mobile-nav-links">
+                <li><a href="#inicio" class="active"><i class="fas fa-home"></i> Inicio</a></li>
+                <li><a href="#evaluacion"><i class="fas fa-clipboard-check"></i> Evaluación</a></li>
+                <li><a href="#profesionales"><i class="fas fa-user-md"></i> Profesionales</a></li>
+                <li><a href="#recetas"><i class="fas fa-utensils"></i> Recetas</a></li>
+                <li><a href="#progreso"><i class="fas fa-chart-line"></i> Mi progreso</a></li>
+                <li><a href="#blog"><i class="fas fa-newspaper"></i> Blog</a></li>
+            </ul>
+            
+            <div class="mobile-user-footer">
+                <a href="#"><i class="fas fa-cog"></i> Configuración</a>
+                <a href="#"><i class="fas fa-question-circle"></i> Ayuda</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Modern Hero Section -->
+    <section class="modern-hero" id="inicio">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Transforma tu salud con <span>NutriApoyo</span></h1>
+                <p class="hero-subtitle">Planificación nutricional personalizada basada en ciencia, tecnología y tus necesidades específicas</p>
+                
+                <div class="hero-cta">
+                    <a href="#" class="btn-primary">Comenzar evaluación</a>
+                    <a href="#" class="btn-secondary">Ver demo <i class="fas fa-play-circle"></i></a>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <span class="stat-label">Evaluación Nutricional</span>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <span class="stat-label">Plan de Dieta Personalizado</span>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <span class="stat-label">Seguimiento de Patologías</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-image">
+                <img src="https://fisaep.com.br/wp-content/uploads/2023/01/Nutricionista.png" alt="App NutriApoyo" class="main-image">
+                <div class="floating-card card-1">
+                    <i class="fas fa-utensils"></i>
+                    <p>+500 recetas saludables</p>
+                </div>
+                <div class="floating-card card-2">
+                    <i class="fas fa-chart-line"></i>
+                    <p>Progreso semanal</p>
+                </div>
+                <div class="floating-card card-3">
+                    <i class="fas fa-user-md"></i>
+                    <p>Expertos certificados</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+        <div class="section-title">
+            <h2>Nuestras características</h2>
+            <p>Descubre todo lo que NutriApoyo puede hacer por tu salud y bienestar</p>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-clipboard-check"></i>
+                </div>
+                <h3>Evaluación Completa</h3>
+                <p>Descubre tu estado nutricional actual con nuestro cuestionario científico validado por expertos.</p>
+                <a href="#" class="feature-link">Saber más <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-user-md"></i>
+                </div>
+                <h3>Profesionales Certificados</h3>
+                <p>Conéctate con nutricionistas y dietistas certificados cerca de tu ubicación.</p>
+                <a href="#" class="feature-link">Encontrar expertos <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <h3>Plan de Alimentación</h3>
+                <p>Recibe planes de comidas personalizados según tus gustos, alergias y objetivos.</p>
+                <a href="#" class="feature-link">Ver ejemplo <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-dumbbell"></i>
+                </div>
+                <h3>Rutinas de Ejercicio</h3>
+                <p>Completa tu plan con rutinas de ejercicio adaptadas a tu condición física.</p>
+                <a href="#" class="feature-link">Explorar rutinas <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-pie"></i>
+                </div>
+                <h3>Seguimiento Detallado</h3>
+                <p>Monitorea tu progreso con gráficos y estadísticas actualizadas en tiempo real.</p>
+                <a href="#" class="feature-link">Ver demo <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <h3>Comunidad</h3>
+                <p>Conéctate con otros usuarios, comparte recetas y logros en nuestra comunidad.</p>
+                <a href="#" class="feature-link">Unirse <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chatbot -->
+    <div class="chatbot-container">
+         <script src="https://cdn.botpress.cloud/webchat/v3.0/inject.js" defer></script>
+<script src="https://files.bpcontent.cloud/2025/07/01/16/20250701163446-GMSMIWWP.js" defer></script>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Mobile Menu Toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const mobileMenuClose = document.getElementById('mobileMenuClose');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            mobileMenuToggle.addEventListener('click', function() {
+                mobileMenu.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            mobileMenuClose.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+            
+            // Cerrar menú al hacer clic en un enlace
+            const mobileLinks = document.querySelectorAll('.mobile-nav-links a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+            
+            // Smooth scrolling
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Header scroll effect
+            const desktopNav = document.getElementById('desktopNav');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    desktopNav.classList.add('scrolled');
+                } else {
+                    desktopNav.classList.remove('scrolled');
+                }
+            });
+        });
+
+        // Chatbot functionality
+        const chatbotToggle = document.getElementById('chatbotToggle');
+        const chatbotClose = document.getElementById('chatbotClose');
+        const chatWindow = document.getElementById('chatWindow');
+        
+        function toggleChat() {
+            chatWindow.classList.toggle('active');
+            chatbotToggle.classList.toggle('hidden');
+            
+            if (chatWindow.classList.contains('active')) {
+                document.getElementById('chatInput').focus();
+            }
+        }
+        
+        chatbotToggle.addEventListener('click', toggleChat);
+        chatbotClose.addEventListener('click', toggleChat);
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const messages = document.getElementById('chatMessages');
+            const message = input.value.trim();
+            
+            if (message) {
+                // Add user message
+                const userMessage = document.createElement('div');
+                userMessage.className = 'message user';
+                userMessage.textContent = message;
+                messages.appendChild(userMessage);
+                
+                // Clear input
+                input.value = '';
+                
+                // Simulate bot response
+                setTimeout(() => {
+                    const botMessage = document.createElement('div');
+                    botMessage.className = 'message bot';
+                    botMessage.textContent = getBotResponse(message);
+                    messages.appendChild(botMessage);
+                    
+                    // Scroll to bottom
+                    messages.scrollTop = messages.scrollHeight;
+                }, 1000);
+                
+                // Scroll to bottom
+                messages.scrollTop = messages.scrollHeight;
+            }
+        }
+
+        function getBotResponse(message) {
+            message = message.toLowerCase();
+            
+            if (message.includes('hola') || message.includes('hi') || message.includes('buenos')) {
+                return "¡Hola! ¿Cómo estás? ¿En qué puedo ayudarte hoy con tu nutrición?";
+            } else if (message.includes('evaluación') || message.includes('evaluar')) {
+                return "Puedo guiarte para comenzar tu evaluación nutricional. ¿Quieres comenzar ahora?";
+            } else if (message.includes('receta') || message.includes('comida')) {
+                return "Tengo muchas recetas saludables. ¿Prefieres algo para desayuno, almuerzo o cena?";
+            } else if (message.includes('profesional') || message.includes('nutricionista')) {
+                return "Puedo ayudarte a encontrar un nutricionista certificado en tu área. ¿Cuál es tu ubicación?";
+            } else if (message.includes('gracias') || message.includes('thanks')) {
+                return "¡De nada! Estoy aquí para ayudarte. ¿Hay algo más en lo que pueda asistirte?";
+            } else {
+                const responses = [
+                    "Entiendo que quieres saber sobre " + message + ". ¿Podrías darme más detalles?",
+                    "Sobre " + message + ", te recomendaría consultar nuestra sección de recursos. ¿Quieres que te guíe?",
+                    "Puedo ayudarte con eso. ¿Te gustaría programar una consulta con uno de nuestros expertos?",
+                    "Interesante pregunta sobre " + message + ". Déjame consultar nuestros recursos para darte la mejor respuesta."
+                ];
+                return responses[Math.floor(Math.random() * responses.length)];
+            }
+        }
+    </script>
+</body>
+</html>
